@@ -4,6 +4,8 @@ NAMESPACE = 'micropets-dev'
 
 allow_k8s_contexts('aks-eu-tap-6')
 
+k8s_yaml(["config/application-configuration.yaml"])
+
 k8s_custom_deploy(
     'fishes-python',
     apply_cmd="tanzu apps workload apply -f config/workload.yaml --update-strategy replace --debug --live-update" +

@@ -16,6 +16,12 @@ spec:
       url: your-registry.io/project
       ref:
         branch: main
+  serviceClaims:
+    - name: fishes-config
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ResourceClaim
+        name: fishes-config
   params:
     - name: testing_pipeline_matching_labels
       value:
