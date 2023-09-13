@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: micropets-fish-python
+  description: Python Flask Web App
+  tags:
+    - app-accelerator
+    - python
+    - flask
+    - gunicorn
+    - web
+    - tanzu
+  annotations:
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=micropets-fish-python'
+spec:
+  type: service
+  lifecycle: experimental
+  owner: default-team

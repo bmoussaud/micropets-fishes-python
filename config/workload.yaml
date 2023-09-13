@@ -1,0 +1,30 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: fishes-python
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/has-tests: "true"
+    app.kubernetes.io/name: fishes
+    app.kubernetes.io/part-of: micropets
+    micropets/kind: backend
+  annotations:
+    autoscaling.knative.dev/minScale: "1"
+spec:
+  source:
+    git:
+      url: your-registry.io/project
+      ref:
+        branch: main
+  params:
+    - name: testing_pipeline_matching_labels
+      value:
+        apps.tanzu.vmware.com/pipeline: skip-test
+    - name: scanning_source_policy
+      value: scan-policy-angular
+    - name: scanning_image_policy
+      value: scan-policy-angular
+    - name: userId
+      value: 1000
+    - name: gitops_commit_message
+      value: fishes fishes dev supplychain@cluster.local
