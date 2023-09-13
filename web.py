@@ -3,11 +3,10 @@ from flask import json
 from flask import jsonify
 from markupsafe import escape
 from pyservicebinding import binding
+import random
 
 import platform
  
-hostname = platform.node()
-
 app = Flask(__name__)
 
 def fromValue():
@@ -15,8 +14,6 @@ def fromValue():
     try:
         sb = binding.ServiceBinding()
         bindings_list = sb.bindings("config","acs")
-        print("bindings_list")
-        print(bindings_list)
         return bindings_list[0]['micropets.from']
     except binding.ServiceBindingRootMissingError as msg:
         # log the error message and retry/exit
@@ -27,7 +24,7 @@ def fromValue():
 def fishes():
     data = dict()
     data['Total']=5
-    data['Hostname']=hostname
+    data['Hostname']=platform.node()
     data['Pets']=[
            {"Index":0,"Name":"Nemoo","Kind":"Fish Clown","Age":14,"URL":"https://www.sciencesetavenir.fr/assets/img/2019/07/10/cover-r4x3w1000-5d258790dd324-f96f05d4901fc6ce0ab038a685e4d5c99f6cdfe2-jpg.jpg","From":fromValue(),"URI":"/fishes/v1/data/0"},
            {"Index":1,"Name":"Glumpy","Kind":"Neon Tetra","Age":11,"URL":"https://www.fishkeepingworld.com/wp-content/uploads/2018/02/Neon-Tetra-New.jpg","From":fromValue(),"URI":"/fishes/v1/data/1"},
@@ -36,11 +33,23 @@ def fishes():
 
     return data
 
+def shuflle(data):
+    nb = random.randint(0,4)
+    print(nb)
+    indexes = [0,1,2,3,4]
+    data['Total']=nb
+    pets = data['Pets']
+    random.shuffle(pets)
+    data['Pets']=[]
+    for i in range(nb): 
+        data['Pets'].append(pets[i])    
+    return data
+
 @app.route('/')
 @app.route('/fishes/v1/data')
 def pets():
-    print("get pets")   
-    return jsonify(fishes())
+    print("get pets")       
+    return jsonify(shuflle(fishes()))
 
 @app.route('/fishes/v1/data/<index>')
 def pet(index):    
