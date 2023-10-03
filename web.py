@@ -63,7 +63,7 @@ def pet(index):
 @app.route('/fishes/v1/config')
 def config():    
     config ={}
-    config['kind']='fish'
+    config['kind']='fishes'
     config["datasource.driver"]="Memory"
     config["datasource.url"]="Memory"
     return jsonify(config)
