@@ -66,6 +66,7 @@ def config():
     config['kind']='fishes'
     config["datasource.driver"]="Memory"
     config["datasource.url"]="Memory"
+    config["hostname"]=platform.node()
     return jsonify(config)
 
 if __name__ == "__main__":
